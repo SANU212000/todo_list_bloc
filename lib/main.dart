@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:todo_list/funtions/controller.dart';
-// import 'package:todo_list/funtions/databasehelper.dart';
-import 'package:todo_list/funtions/navigation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list/navigator/navigation.dart';
+import 'package:todo_list/navigator/navigatorBloc.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final themeChanger = Get.put(ThemeChanger());
-  await themeChanger.loadtheme();
-
-  runApp(const TodoApp());
+void main() {
+  runApp(
+    BlocProvider(
+      create: (context) => NavigationBloc(),
+      child: const TodoApp(),
+    ),
+  );
 }

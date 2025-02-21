@@ -1,41 +1,27 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_list/screens/loginpage.dart';
-import 'package:todo_list/screens/screen1.dart';
-import 'package:todo_list/funtions/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list/controller/constants.dart';
+import 'package:todo_list/navigator/navigatorBloc.dart';
 
-class IntroScreen extends StatelessWidget {
+class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
 
-  Future<String> determineInitialRoute() async {
-    final prefs = await SharedPreferences.getInstance();
-    final refreshToken = prefs.getString('refreshToken');
+  @override
+  _IntroScreenState createState() => _IntroScreenState();
+}
 
-    if (refreshToken != null && refreshToken.isNotEmpty) {
-      print('Refresh token retrieved: $refreshToken');
-      return '/home';
-    }
-
-    print('No refresh token found.');
-    return '/userScreen';
-  }
-
-  Future<void> navigateAfterDelay(BuildContext context) async {
-    final initialRoute = await determineInitialRoute();
-    await Future.delayed(const Duration(seconds: 4));
-
-    if (initialRoute == '/home') {
-      Get.offAll(() => TodoScreen(email: ''));
-    } else {
-      Get.offAll(() => const Login());
-    }
+class _IntroScreenState extends State<IntroScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 3), () {
+      context.read<NavigationBloc>().add(NavigateToHome());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    navigateAfterDelay(context);
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -61,7 +47,6 @@ class IntroScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 5),
-            // Fade Animation
             TweenAnimationBuilder<double>(
               tween: Tween(begin: 0.0, end: 1.0),
               duration: const Duration(seconds: 2),

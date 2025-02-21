@@ -1,35 +1,50 @@
 import 'package:flutter/material.dart';
 
 class Todo {
-  String username;
-  String id;
-  String title;
-  bool isCompleted;
-  final Color? color;
+  final String id;
+  final String title;
+  final bool isCompleted;
+  final Color color;
 
   Todo({
-    required this.username,
     required this.id,
     required this.title,
     required this.isCompleted,
     required this.color,
   });
 
-  factory Todo.fromJson(Map<String, dynamic> json) {
+  // ✅ Add `copyWith` method
+  Todo copyWith({
+    String? id,
+    String? title,
+    bool? isCompleted,
+    Color? color,
+  }) {
     return Todo(
-      username: json["username"],
-      id: json['_id'],
-      title: json['title'],
-      isCompleted: json['isCompleted'],
-      color: json['color'] != null ? Color(json['color']) : null,
+      id: id ?? this.id,
+      title: title ?? this.title,
+      isCompleted: isCompleted ?? this.isCompleted,
+      color: color ?? this.color,
     );
   }
 
-  Map<String, dynamic> toJson() {
+  // ✅ Convert Todo to Map for SQLite
+  Map<String, dynamic> toMap() {
     return {
-      'name': username,
+      'id': id,
       'title': title,
-      'isCompleted': isCompleted,
+      'isCompleted': isCompleted ? 1 : 0,
+      'color': color.value, // Store color as int
     };
+  }
+
+  // ✅ Convert from Map to Todo
+  factory Todo.fromMap(Map<String, dynamic> map) {
+    return Todo(
+      id: map['id'],
+      title: map['title'],
+      isCompleted: map['isCompleted'] == 1,
+      color: Color(map['color']), // Convert int to Color
+    );
   }
 }

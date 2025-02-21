@@ -1,64 +1,71 @@
-import 'dart:async';
+import 'dart:async'; // Importing for Timer functionality
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list/controller/constants.dart';
-import 'package:todo_list/navigator/navigatorBloc.dart';
+import 'package:todo_list/screens/constants.dart'; // Importing constants for colors
+import 'package:todo_list/navigator/navigator_bloc.dart'; // Importing NavigationBloc for state management
 
+// ✅ StatefulWidget for IntroScreen to manage animations and timed navigation
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
 
   @override
-  _IntroScreenState createState() => _IntroScreenState();
+  IntroScreenState createState() => IntroScreenState(); // ✅ No underscore (public class)
 }
 
-class _IntroScreenState extends State<IntroScreen> {
+// ✅ State class for IntroScreen
+class IntroScreenState extends State<IntroScreen> {
   @override
   void initState() {
     super.initState();
+    
+    // ⏳ Timer to delay navigation for 3 seconds
     Timer(const Duration(seconds: 3), () {
-      context.read<NavigationBloc>().add(NavigateToHome());
+      context.read<NavigationBloc>().add(NavigateToHome()); // 🚀 Dispatch event to navigate
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Center( // ✅ Centers content
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center, // ✅ Aligns vertically to center
           children: [
+            // 🔥 Animated Scaling Text - "Pandora"
             TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0.5, end: 2.0),
-              duration: const Duration(seconds: 3),
-              curve: Curves.bounceOut,
+              tween: Tween(begin: 0.5, end: 2.0), // 🔄 Starts small, grows to full size
+              duration: const Duration(seconds: 3), // ⏳ 3-second animation
+              curve: Curves.bounceOut, // 🎭 Adds bounce effect
               builder: (context, scaleValue, child) {
-                return Transform.scale(
+                return Transform.scale( // 🔍 Scales text
                   scale: scaleValue,
                   child: const Text(
                     "Pandora",
                     style: TextStyle(
-                      fontFamily: "intro",
+                      fontFamily: "intro", // ✅ Custom font
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.white, // 🎨 White color
                     ),
                   ),
                 );
               },
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 5), // 🏗 Adds spacing
+
+            // ✨ Animated Opacity Text - "stability for your time"
             TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0.0, end: 1.0),
-              duration: const Duration(seconds: 2),
+              tween: Tween(begin: 0.0, end: 1.0), // 🔄 Fades in
+              duration: const Duration(seconds: 2), // ⏳ 2-second animation
               builder: (context, opacityValue, child) {
-                return Opacity(
+                return Opacity( // 👀 Controls opacity
                   opacity: opacityValue,
                   child: const Text(
                     "stability for your time",
                     style: TextStyle(
-                      fontFamily: "intro",
+                      fontFamily: "intro", // ✅ Custom font
                       fontSize: 16,
-                      color: Colors.white70,
+                      color: Colors.white70, // 🎨 Slightly faded white
                     ),
                   ),
                 );
@@ -67,7 +74,7 @@ class _IntroScreenState extends State<IntroScreen> {
           ],
         ),
       ),
-      backgroundColor: kPrimaryColor,
+      backgroundColor: kPrimaryColor, // 🎨 Background color from constants
     );
   }
 }

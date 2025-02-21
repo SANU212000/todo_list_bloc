@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list/controller/theme_controller/theme_bloc.dart';
-import 'package:todo_list/controller/todo_bloc.dart';
-import 'package:todo_list/controller/todo_events.dart';
-import 'package:todo_list/controller/todo_state.dart';
-import 'package:todo_list/funtions/todo_list.dart';
-import 'package:todo_list/controller/constants.dart';
+import 'package:todo_list/bloc%20/theme_controller/theme_bloc.dart';
+import 'package:todo_list/bloc%20/bloc_controller/todo_bloc.dart';
+import 'package:todo_list/bloc%20/bloc_controller/todo_events.dart';
+import 'package:todo_list/bloc%20/bloc_controller/todo_state.dart';
+import 'package:todo_list/model/todo_list.dart';
+import 'package:todo_list/screens/constants.dart';
 import 'package:todo_list/widgets/widgets.dart';
 
 class TodoScreen extends StatelessWidget {
